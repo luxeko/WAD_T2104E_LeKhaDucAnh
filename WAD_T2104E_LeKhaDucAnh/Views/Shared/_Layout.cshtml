@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div style="display:flex;justify-content:space-around; align-items:center">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            @Html.ActionLink("Categories", "index", "Categories")
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Products", "index", "Products")</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="margin-right:50px">
+                <div style="color:white" id="getTCurrentTime"></div>
+            </div>
+           
+
+        </div>
+
+    </div>
+    <div class="container body-content">
+        <div id="toast"></div>
+
+        @if (TempData["Message"] != null )
+        {
+            if (TempData["Message"] == "Delete")
+            {
+                <script type="module">
+                    import toast from '../../Scripts/toast.js'
+                    const test = document.getElementById('toast');
+                    toast({
+                        title: "Delete",
+                        message: "Xoá thành công",
+                        type: "danger",
+                        duration: 2000,
+                    });
+                </script>
+
+            }
+            else if (TempData["Message"] == "Edit")
+            {
+                <script type="module">
+                    import toast from '../../Scripts/toast.js'
+                    const test = document.getElementById('toast');
+                    toast({
+                        title: "Edit",
+                        message: "Sửa thành công",
+                        type: "info",
+                        duration: 2000,
+                    });
+                </script>
+
+            }
+            else if (TempData["Message"] == "Create")
+            {
+                <script type="module">
+                    import toast from '../../Scripts/toast.js'
+                    const test = document.getElementById('toast');
+                    toast({
+                        title: "Create",
+                        message: "Thêm thành thành công",
+                        type: "success",
+                        duration: 2000,
+                    });
+                </script>
+
+            }
+
+            TempData["Message"] = "";
+        }
+        @RenderBody()
+
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Lê Khả Đức Anh</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        currentTime = function () {
+            var date = new Date(); // today
+            console.log(date);
+            var thisday = date.getDay();
+            var thismonth = date.getMonth();
+            var thisdate = date.getDate();
+            var thisyear = date.getFullYear();
+            var thisminute = String(date.getMinutes()).padStart(2, "0");
+            var thishour = String(date.getHours()).padStart(2, "0")
+            var thisseconds = String(date.getSeconds()).padStart(2, "0");
+            var months = new Array("Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu", "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai");
+            var name_of_days = new Array("Chủ nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy");
+            var day_name = name_of_days[thisday];
+            var monthname = months[thismonth];
+            var time = day_name + ", " + thisdate + " " + monthname + " " + thisyear + ', ' + thishour + ': ' + thisminute + ': ' + thisseconds;
+
+            document.getElementById('getTCurrentTime').innerHTML = time;
+        }
+
+        show = function () {
+            currentTime();
+        }
+        show();
+        loadTime = function () {
+            currentTime();
+            setTimeout(loadTime, 1)
+        }
+        loadTime();
+    </script>
+</body>
+
+</html>

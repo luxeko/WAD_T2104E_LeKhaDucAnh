@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WAD_T2104E_LeKhaDucAnh.Models.Product>
+
+@{
+    ViewBag.Title = "List Products";
+}
+<h2>List Products</h2>
+
+<p>
+    @Html.ActionLink("Create New Product", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th >
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.categories.CategoryName)*@
+            Category
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td style="color: #22bb33; font-weight:600">
+            $ @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.categories.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }, new {@class = "edit"}) |
+            @Html.ActionLink("Details", "Details", new { id = item.ProductID }, new { @class = "details" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductID }, new { @class = "delete" })
+        </td>
+    </tr>
+}
+
+</table>
